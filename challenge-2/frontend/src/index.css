@@ -1,0 +1,411 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ────────────────────────────────────────────────────────── */
+:root {
+  --bg-base: #080d1a;
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-surface-hover: rgba(255, 255, 255, 0.07);
+  --bg-elevated: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.12);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --emerald: #10b981;
+  --emerald-dim: #059669;
+  --indigo: #6366f1;
+  --indigo-dim: #4f46e5;
+  --red-soft: rgba(239, 68, 68, 0.15);
+  --amber-soft: rgba(245, 158, 11, 0.15);
+  --emerald-soft: rgba(16, 185, 129, 0.15);
+  --indigo-soft: rgba(99, 102, 241, 0.15);
+  --slate-soft: rgba(100, 116, 139, 0.15);
+}
+
+/* ─── Base Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  /* Animated mesh gradient background */
+  background-image:
+    radial-gradient(at 20% 30%, hsla(220, 70%, 12%, 0.8) 0px, transparent 55%),
+    radial-gradient(at 85% 15%, hsla(260, 60%, 10%, 0.7) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, hsla(170, 50%, 8%, 0.6) 0px, transparent 50%);
+}
+
+/* ─── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Select / Dropdown dark theme ────────────────────────────────────────── */
+/*
+ * Native <select> dropdowns render their option list outside the browser's
+ * paint context, so rgba() / transparent backgrounds are ignored by the OS.
+ * A solid opaque color is required for the dropdown list to appear dark.
+ * These rules apply globally so any future <select> in the app is covered.
+ */
+select {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+select option {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* Disabled options stay muted */
+select option:disabled {
+  color: #475569;
+}
+
+/* ─── Glass Card ───────────────────────────────────────────────────────────── */
+@layer components {
+  .glass-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .glass-card:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-muted);
+  }
+
+  /* ─── Buttons ──────────────────────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm
+           text-white transition-all duration-200 focus:outline-none focus-visible:ring-2
+           focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm
+           text-slate-300 transition-all duration-200 focus:outline-none focus-visible:ring-2
+           focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+  }
+  .btn-secondary:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-muted);
+    color: #f1f5f9;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm
+           text-white transition-all duration-200 focus:outline-none;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+  }
+  .btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .btn-icon {
+    @apply p-2 rounded-lg text-slate-400 transition-all duration-200 focus:outline-none;
+    background: transparent;
+  }
+  .btn-icon:hover {
+    background: var(--bg-surface-hover);
+    color: var(--text-primary);
+  }
+
+  /* ─── Input ────────────────────────────────────────────────────────────── */
+  .input-field {
+    @apply w-full px-3 py-2.5 rounded-lg text-sm text-slate-100 placeholder-slate-500
+           transition-all duration-200 focus:outline-none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+  }
+  .input-field:focus {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  /* ─── Priority Badges ──────────────────────────────────────────────────── */
+  .badge-high {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .badge-medium {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  .badge-low {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+  }
+
+  /* ─── Status Badges ────────────────────────────────────────────────────── */
+  .badge-completed {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  .badge-active {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+
+  /* ─── Modal Overlay ────────────────────────────────────────────────────── */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+  }
+  .modal-panel {
+    @apply w-full max-w-lg max-h-screen overflow-y-auto;
+    background: #0f1729;
+    border: 1px solid var(--border-muted);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease-out;
+  }
+
+  /* ─── Skeleton ─────────────────────────────────────────────────────────── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 6px;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ─── Splash Screen ─────────────────────────────────────────────────────── */
+  .splash-root {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #080d1a;
+    background-image:
+      radial-gradient(at 25% 35%, hsla(220, 70%, 14%, 0.9) 0px, transparent 55%),
+      radial-gradient(at 80% 20%, hsla(260, 60%, 12%, 0.8) 0px, transparent 50%),
+      radial-gradient(at 50% 80%, hsla(170, 50%, 9%, 0.7) 0px, transparent 50%);
+    animation-duration: 0.45s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+  }
+
+  /* Ambient glow orbs */
+  .splash-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .splash-orb--emerald {
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+    top: 15%;
+    left: 10%;
+  }
+  .splash-orb--indigo {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+    bottom: 15%;
+    right: 8%;
+  }
+
+  /* Center card */
+  .splash-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    animation: splashCardRise 0.55s ease-out both;
+  }
+
+  /* Logo mark */
+  .splash-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #10b981, #6366f1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.1),
+      0 8px 32px rgba(16,185,129,0.35),
+      0 0 80px rgba(99,102,241,0.2);
+    margin-bottom: 4px;
+  }
+
+  /* App title */
+  .splash-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #f1f5f9;
+    margin: 0;
+    line-height: 1;
+  }
+  .splash-title--accent {
+    background: linear-gradient(90deg, #10b981, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtitle */
+  .splash-subtitle {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #64748b;
+    letter-spacing: 0.02em;
+    margin: 2px 0 8px;
+  }
+
+  /* Loading dots */
+  .splash-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 4px;
+  }
+  .splash-dot {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #334155;
+    animation: splashDotBounce 1.1s ease-in-out infinite;
+  }
+
+  /* ─── Enhanced Empty State ──────────────────────────────────────────────── */
+  .empty-state-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 56px 32px;
+    border-radius: 20px;
+    max-width: 420px;
+    width: 100%;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: splashCardRise 0.4s ease-out both;
+  }
+
+  .empty-state-icon-ring {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.18);
+    box-shadow: 0 0 48px rgba(99,102,241,0.1);
+  }
+  /* Subtle pulse ring */
+  .empty-state-icon-ring::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 28px;
+    border: 1px solid rgba(99,102,241,0.08);
+    animation: emptyPulse 2.5s ease-in-out infinite;
+  }
+}
+
+/* ─── Splash keyframes (global — not inside @layer) ─────────────────────── */
+@keyframes splashFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes splashFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes splashCardRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splashDotBounce {
+  0%, 80%, 100% { transform: translateY(0);    background: #334155; }
+  40%           { transform: translateY(-7px); background: #6366f1; }
+}
+
+@keyframes emptyPulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.3; transform: scale(1.06); }
+}
