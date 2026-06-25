@@ -1,105 +1,114 @@
 # TaskFlow
 
-> A modern, full-stack task management system built with React, Node.js, Express, and PostgreSQL.
+> A modern, full-stack task management system built with React, Node.js, Express.js, Prisma ORM, and PostgreSQL.
+
+**Developer Assignment Submission for Ziptrrip**
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)](https://neon.tech)
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white)](https://prisma.io)
+[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com)
+[![Render](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render&logoColor=black)](https://render.com)
 
 ---
 
-## Project Overview
+# 🌐 Live Demo
 
-TaskFlow is a production-quality Todo Management System built as a developer assignment submission. It demonstrates a clean separation of concerns between a React frontend and a Node.js REST API, connected to a cloud PostgreSQL database.
+### Frontend (Vercel)
 
-The UI is designed to feel like a modern SaaS product — dark mode, glassmorphism cards, smooth animations, and a responsive layout that works on all devices.
+https://ziptrip-phi.vercel.app
 
----
+### Backend API (Render)
 
-## Features
-
-- ✅ **Full CRUD** — Create, read, update, and delete tasks
-- 🎯 **Priority Management** — LOW / MEDIUM / HIGH with visual badges
-- 📅 **Due Dates** — Track deadlines with overdue highlighting
-- ✔️ **Completion Tracking** — Track when each task was completed
-- 🔍 **Search** — Instant client-side search across title, description, and category
-- 🗂️ **Filters** — All / Active / Completed tabs with live counts
-- 📊 **Stats Dashboard** — Total, Completed, Pending, and High Priority counters
-- 🔔 **Toast Notifications** — Success and error toasts for every action
-- 💀 **Loading Skeletons** — Professional shimmer placeholder states
-- ❌ **Error Handling** — Graceful error UI with retry actions
-- 📱 **Responsive Design** — Optimized for mobile, tablet, and desktop
+https://taskflow-api-ivd2.onrender.com
 
 ---
 
-## Tech Stack
+# Project Overview
+
+TaskFlow is a production-quality Todo Management System developed as part of the Ziptrrip Developer Assignment.
+
+The project demonstrates modern full-stack development using React, Express.js, Prisma ORM, and PostgreSQL while following clean architecture principles, reusable component design, and responsive UI practices.
+
+The application provides a clean, premium dark-themed interface with glassmorphism effects, responsive layouts, toast notifications, loading skeletons, and complete CRUD functionality backed by a cloud PostgreSQL database.
+
+---
+
+# Features
+
+- ✅ Create Todo
+- ✅ Update Todo
+- ✅ Delete Todo
+- ✅ Mark Todo as Completed
+- ✅ View Todo Details
+- ✅ Search Todos
+- ✅ Filter Todos (All / Active / Completed)
+- ✅ Priority Management (Low / Medium / High)
+- ✅ Due Date Support
+- ✅ Completion Tracking
+- ✅ Dashboard Statistics
+- ✅ Loading Skeletons
+- ✅ Beautiful Empty State
+- ✅ Splash Screen
+- ✅ Toast Notifications
+- ✅ Responsive Design
+- ✅ REST API
+- ✅ PostgreSQL Database
+- ✅ Prisma ORM
+- ✅ Production Deployment
+
+---
+
+# Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, Vite, React Router DOM |
-| Styling | Tailwind CSS v3 |
+|--------|------------|
+| Frontend | React 18 |
+| Build Tool | Vite |
+| Routing | React Router DOM |
+| Styling | Tailwind CSS |
 | Icons | Lucide React |
 | HTTP Client | Axios |
 | Notifications | React Hot Toast |
 | Date Formatting | date-fns |
-| Backend | Node.js, Express.js |
+| Backend | Node.js |
+| API | Express.js |
 | ORM | Prisma |
 | Database | PostgreSQL (Neon) |
-| Frontend Deploy | Vercel (ready) |
-| Backend Deploy | Render (ready) |
+| Frontend Deployment | Vercel |
+| Backend Deployment | Render |
 
 ---
 
-## Architecture
+# Architecture
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                        Browser                            │
-│                                                           │
-│   ┌─────────────────────────────────────────────────┐    │
-│   │              React Frontend (Vite)               │    │
-│   │                                                   │    │
-│   │  Dashboard.jsx  ──────────  TodoDetails.jsx      │    │
-│   │       │                           │               │    │
-│   │  useTodos hook             api.getTodoById()      │    │
-│   │       │                           │               │    │
-│   │  services/api.js  ──  Axios  ─────┘               │    │
-│   └────────────────┬────────────────────────────────┘    │
-│                    │  HTTP (REST)                          │
-└────────────────────┼──────────────────────────────────────┘
-                     │
-┌────────────────────▼──────────────────────────────────────┐
-│                Node.js / Express Backend                    │
-│                                                             │
-│   server.js                                                 │
-│      │                                                      │
-│      ├── /api/todos  ──  todo.routes.js                    │
-│      │        │                                             │
-│      │        ├── validateTodo middleware                   │
-│      │        └── todo.controller.js                        │
-│      │                  │                                   │
-│      │           todo.service.js  (Prisma queries)          │
-│      │                  │                                   │
-│      └── errorHandler middleware                            │
-│                                                             │
-└────────────────────┬────────────────────────────────────────┘
-                     │  Prisma Client
-┌────────────────────▼────────────────────────────────────────┐
-│              Neon PostgreSQL (Cloud)                         │
-│                                                              │
-│   todos table                                                │
-│   ┌──────────────────────────────────────────────────────┐  │
-│   │ id · title · description · completed · priority      │  │
-│   │ category · dueDate · completedAt · createdAt         │  │
-│   │ updatedAt                                            │  │
-│   └──────────────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────────┘
+```text
+                        Browser
+                           │
+                           │
+                   React Frontend
+                    (Vite + React)
+                           │
+            React Router + Axios API Layer
+                           │
+                           │
+                   REST API Requests
+                           │
+                           ▼
+                 Express.js Backend
+                           │
+                Controllers & Services
+                           │
+                     Prisma ORM
+                           │
+                           ▼
+                PostgreSQL (Neon Cloud)
 ```
 
 ---
 
-## Database Schema
+# Database Schema
 
 ```prisma
 model Todo {
@@ -124,340 +133,560 @@ enum Priority {
 
 ---
 
-## Installation
+# Installation
 
-### Prerequisites
+## Prerequisites
 
-- Node.js 18+
-- npm or yarn
-- A [Neon](https://neon.tech) PostgreSQL database (free tier is sufficient)
+- Node.js 18 or above
+- npm
+- PostgreSQL Database (Neon Recommended)
 
-### 1. Clone the Repository
+---
+
+## Clone Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo/challenge-2
+git clone https://github.com/ankush-jamuar/Ziptrip.git
+
+cd Ziptrip/challenge-2
 ```
 
 ---
 
-## Environment Variables
+# Environment Variables
 
-### Backend (`backend/.env`)
+## Backend (`backend/.env`)
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | Neon PostgreSQL connection string | `postgresql://user:pass@host/db?sslmode=require` |
-| `PORT` | Server port | `5000` |
-| `NODE_ENV` | Environment | `development` |
-| `FRONTEND_URL` | Allowed CORS origin | `http://localhost:5173` |
+```env
+DATABASE_URL=your_postgresql_connection_string
+PORT=5000
+NODE_ENV=development
 
-### Frontend (`frontend/.env`)
+# Development
+FRONTEND_URL=http://localhost:5173
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `VITE_API_URL` | Backend API base URL | `http://localhost:5000/api` |
+# Production
+# FRONTEND_URL=https://ziptrip-phi.vercel.app
+```
 
 ---
 
-## Backend Setup
+## Frontend (`frontend/.env`)
+
+```env
+# Development
+VITE_API_URL=http://localhost:5000/api
+
+# Production
+# VITE_API_URL=https://taskflow-api-ivd2.onrender.com/api
+```
+
+---
+
+# Backend Setup
 
 ```bash
 cd backend
 
-# 1. Install dependencies
 npm install
 
-# 2. Configure environment
 cp .env.example .env
-# Edit .env and add your DATABASE_URL from Neon
 
-# 3. Generate Prisma client
 npm run db:generate
 
-# 4. Run database migrations
 npm run db:migrate
-# Enter migration name when prompted (e.g., "init")
 
-# 5. Seed the database with sample data
 npm run db:seed
 
-# 6. Start development server
 npm run dev
 ```
 
-The API will be running at `http://localhost:5000`.
-Health check: `http://localhost:5000/health`
+Backend will run at:
+
+```
+http://localhost:5000
+```
+
+Health Endpoint
+
+```
+http://localhost:5000/health
+```
 
 ---
 
-## Frontend Setup
+# Frontend Setup
 
 ```bash
 cd frontend
 
-# 1. Install dependencies
 npm install
 
-# 2. Configure environment
 cp .env.example .env
-# .env already points to http://localhost:5000/api
 
-# 3. Start development server
 npm run dev
 ```
 
-The app will be running at `http://localhost:5173`.
+Frontend will run at:
+
+```
+http://localhost:5173
+---
+
+# API Endpoints
+
+## Development
+
+```
+http://localhost:5000/api
+```
+
+## Production
+
+```
+https://taskflow-api-ivd2.onrender.com/api
+```
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/todos` | Fetch all todos |
+| GET | `/todos/:id` | Fetch a specific todo |
+| POST | `/todos` | Create a new todo |
+| PUT | `/todos/:id` | Update an existing todo |
+| DELETE | `/todos/:id` | Delete a todo |
 
 ---
 
-## API Endpoints
+## Sample Request
 
-Base URL: `http://localhost:5000/api`
+### Create Todo
 
-| Method | Endpoint | Description | Request Body | Success |
-|--------|----------|-------------|--------------|---------|
-| `GET` | `/todos` | List all todos | — | `200` + array |
-| `GET` | `/todos/:id` | Get single todo | — | `200` + todo |
-| `POST` | `/todos` | Create todo | `{ title*, description?, priority?, category?, dueDate? }` | `201` + todo |
-| `PUT` | `/todos/:id` | Update todo | Any todo fields | `200` + todo |
-| `DELETE` | `/todos/:id` | Delete todo | — | `200` + message |
+```http
+POST /api/todos
+```
 
-### Response Format
+```json
+{
+  "title": "Complete Developer Assignment",
+  "description": "Submit before deadline",
+  "priority": "HIGH",
+  "category": "Assignment",
+  "dueDate": "2026-06-30T10:00:00.000Z"
+}
+```
 
-**Success:**
+---
+
+## Sample Success Response
+
 ```json
 {
   "success": true,
-  "data": { ... }
-}
-```
-
-**Error:**
-```json
-{
-  "success": false,
-  "message": "Human-readable error message"
+  "message": "Todo created successfully.",
+  "data": {
+    "id": "...",
+    "title": "...",
+    "description": "...",
+    "priority": "HIGH"
+  }
 }
 ```
 
 ---
 
-## Prisma Commands
+## Sample Error Response
+
+```json
+{
+  "success": false,
+  "message": "Todo not found"
+}
+```
+
+---
+
+# Prisma Commands
+
+Generate Prisma Client
 
 ```bash
-# Generate Prisma client after schema changes
 npm run db:generate
+```
 
-# Create and apply a new migration
+Create Migration
+
+```bash
 npm run db:migrate
+```
 
-# Push schema changes without migration (fast, dev only)
+Push Schema
+
+```bash
 npm run db:push
+```
 
-# Seed the database with sample todos
+Seed Database
+
+```bash
 npm run db:seed
+```
 
-# Open Prisma Studio (visual DB browser)
+Open Prisma Studio
+
+```bash
 npm run db:studio
+```
 
-# Reset the database and re-run all migrations
+Reset Database
+
+```bash
 npm run db:reset
 ```
 
 ---
 
-## Folder Structure
+# Folder Structure
 
-```
-challenge-2/
+```text
+challenge-2
+│
 ├── README.md
 ├── FEATURES.md
 │
-├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma       # Database schema
-│   │   └── seed.js             # Sample data seeder
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── database.js     # Prisma client singleton
-│   │   ├── controllers/
-│   │   │   └── todo.controller.js
-│   │   ├── middleware/
-│   │   │   ├── errorHandler.js
-│   │   │   └── validateTodo.js
-│   │   ├── routes/
-│   │   │   └── todo.routes.js
-│   │   ├── services/
-│   │   │   └── todo.service.js
-│   │   └── utils/
-│   │       └── ApiError.js
+├── backend
+│   ├── prisma
+│   │   ├── migrations
+│   │   ├── schema.prisma
+│   │   └── seed.js
+│   │
+│   ├── src
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── middleware
+│   │   ├── routes
+│   │   ├── services
+│   │   └── utils
+│   │
 │   ├── server.js
-│   ├── .env.example
-│   └── package.json
+│   ├── package.json
+│   └── .env.example
 │
-└── frontend/
-    ├── src/
-    │   ├── components/         # Reusable UI components
-    │   ├── hooks/              # Custom React hooks
-    │   ├── layouts/            # Page layout wrappers
-    │   ├── pages/              # Route-level page components
-    │   ├── services/           # API service layer
-    │   ├── App.jsx             # Router setup
+└── frontend
+    ├── public
+    ├── src
+    │   ├── components
+    │   ├── hooks
+    │   ├── layouts
+    │   ├── pages
+    │   ├── services
+    │   ├── App.jsx
     │   ├── main.jsx
-    │   └── index.css           # Design system + Tailwind
-    ├── index.html
+    │   └── index.css
+    │
+    ├── package.json
     ├── tailwind.config.js
-    └── package.json
+    └── vite.config.js
 ```
 
 ---
 
-## Troubleshooting
+# Troubleshooting
 
-### `P1001: Can't reach database server`
-- Verify your `DATABASE_URL` in `.env` is correct and complete
-- Ensure your Neon project is active (free tier projects may sleep)
-- Check that `?sslmode=require` is appended to the connection string
+### Database Connection Error
 
-### `CORS error in browser`
-- Make sure `FRONTEND_URL` in the backend `.env` matches your frontend URL exactly (no trailing slash)
-- Restart the backend server after changing `.env`
+- Verify `DATABASE_URL` is correct.
+- Ensure Neon database is active.
+- Run:
 
-### `Vite cannot find module`
-- Run `npm install` in the `frontend/` directory
-- Delete `node_modules` and re-run `npm install` if issues persist
-
-### `prisma generate` fails
-- Make sure `DATABASE_URL` is set before running generate
-- Try `npx prisma generate` directly
-
-### Port already in use
-- Backend default port is `5000`. Change `PORT` in `.env` if needed
-- Frontend runs on `5173` by default. Vite will auto-increment if busy
-
----
-
-## Deployment
-
-### Backend → Render
-
-1. Push code to GitHub
-2. Create a new **Web Service** on Render
-3. Set build command: `npm install && npx prisma generate`
-4. Set start command: `npm start`
-5. Add environment variables: `DATABASE_URL`, `NODE_ENV=production`, `FRONTEND_URL`
-
-### Frontend → Vercel
-
-1. Import the `frontend/` folder as a new Vercel project
-2. Framework preset: **Vite**
-3. Add environment variable: `VITE_API_URL=https://your-render-backend.onrender.com/api`
-
----
-
-## Future Improvements
-
-- [ ] User authentication (JWT + refresh tokens)
-- [ ] Subtasks / checklist items within a todo
-- [ ] Labels / multi-tag support
-- [ ] Recurring tasks
-- [ ] Drag-and-drop reordering
-- [ ] Calendar view
-- [ ] Email reminders for due dates
-- [ ] Team collaboration / shared workspaces
-- [ ] Dark / light theme toggle
-- [ ] Offline support with service workers
-
----
-
-## Deployment Status
-
-The application is fully implemented, documented, and tested locally.
-
-Deployment configuration for both Vercel (Frontend) and Render (Backend) has been prepared and documented. The project can be deployed by following the instructions provided below.
-
----
-
-## Deployment
-
-### Backend Deployment (Render)
-
-1. Push the repository to GitHub.
-2. Create a new Web Service on Render.
-3. Set the root directory to:
-
-```text
-challenge-2/backend
+```bash
+npm run db:generate
+npm run db:migrate
 ```
 
-4. Add the following environment variables:
+---
+
+### CORS Issues
+
+Verify the backend environment variable:
 
 ```env
-DATABASE_URL=your_postgresql_connection_string
-NODE_ENV=production
-PORT=10000
+FRONTEND_URL=https://ziptrip-phi.vercel.app
 ```
 
-5. Deploy the service.
+Restart or redeploy the backend after changing environment variables.
 
 ---
 
-### Frontend Deployment (Vercel)
+### Prisma Errors
 
-1. Import the repository into Vercel.
-2. Set the root directory to:
+Run:
 
-```text
+```bash
+npm run db:generate
+```
+
+If migrations are pending:
+
+```bash
+npx prisma migrate deploy
+```
+
+---
+
+### Build Errors
+
+Delete dependencies and reinstall.
+
+```bash
+rm -rf node_modules
+npm install
+```
+
+---
+
+### Port Already in Use
+
+Backend
+
+```
+5000
+```
+
+Frontend
+
+```
+5173
+```
+
+Change ports inside `.env` if required.
+
+---
+
+# Deployment
+
+## Frontend
+
+Platform
+
+```
+Vercel
+```
+
+Framework
+
+```
+Vite
+```
+
+Root Directory
+
+```
 challenge-2/frontend
 ```
 
-3. Add the following environment variable:
+Build Command
 
-```env
-VITE_API_URL=https://your-backend-url/api
+```bash
+npm run build
 ```
 
-4. Deploy the application.
+Output Directory
+
+```
+dist
+```
+
+Environment Variable
+
+```env
+VITE_API_URL=https://taskflow-api-ivd2.onrender.com/api
+```
 
 ---
 
-## Project Verification
+## Backend
 
-The project has been verified for:
+Platform
 
-* Successful production build
-* Complete CRUD functionality
-* PostgreSQL database integration
-* Prisma ORM integration
-* Responsive user interface
-* Multi-page React application
-* Express.js REST API
-* Documentation completeness
+```
+Render
+```
+
+Root Directory
+
+```
+challenge-2/backend
+```
+
+Build Command
+
+```bash
+npm install && npx prisma@5.22.0 migrate deploy && npx prisma@5.22.0 generate
+```
+
+Start Command
+
+```bash
+npm start
+```
+
+Environment Variables
+
+```env
+DATABASE_URL=<Neon PostgreSQL URL>
+
+NODE_ENV=production
+
+PORT=10000
+
+FRONTEND_URL=https://ziptrip-phi.vercel.app
+```
 
 ---
 
-## Future Improvements
+# Live Application
 
-* User Authentication
-* Recurring Tasks
-* Calendar View
-* Team Collaboration
-* Drag and Drop Task Ordering
-* Email Notifications
-* Offline Support
-* Theme Customization
-* Advanced Analytics Dashboard
+## Frontend
+
+https://ziptrip-phi.vercel.app
+
+## Backend API
+
+https://taskflow-api-ivd2.onrender.com
+---
+
+# Project Status
+
+| Feature | Status |
+|---------|--------|
+| Challenge 1 | ✅ Completed |
+| Challenge 2 | ✅ Completed |
+| Full CRUD Operations | ✅ |
+| PostgreSQL Integration | ✅ |
+| Prisma ORM | ✅ |
+| Responsive Design | ✅ |
+| REST API | ✅ |
+| Search & Filters | ✅ |
+| Priority Management | ✅ |
+| Due Date Support | ✅ |
+| Dashboard Statistics | ✅ |
+| Loading Skeletons | ✅ |
+| Empty State | ✅ |
+| Splash Screen | ✅ |
+| Toast Notifications | ✅ |
+| Production Deployment | ✅ |
+| Frontend Live | ✅ |
+| Backend Live | ✅ |
 
 ---
 
-## Author
+# Key Highlights
+
+- Built using a modern full-stack architecture.
+- Clean separation of concerns between frontend and backend.
+- Cloud PostgreSQL database using Neon.
+- Prisma ORM for type-safe database operations.
+- Responsive UI built with React and Tailwind CSS.
+- Production deployment using Vercel and Render.
+- Complete RESTful API implementation.
+- Modern dark UI with glassmorphism design.
+- Reusable component-based architecture.
+- Well-documented project structure and setup guide.
+
+---
+
+# Future Improvements
+
+Although the assignment requirements have been fully completed, the following features can be added in future versions:
+
+- User Authentication (JWT / OAuth)
+- Team Collaboration
+- Shared Workspaces
+- Drag & Drop Task Ordering
+- Calendar View
+- Email Notifications
+- Push Notifications
+- File Attachments
+- Activity History
+- Recurring Tasks
+- Labels & Tags
+- Offline Support (PWA)
+- Theme Customization
+- Analytics Dashboard
+- AI-powered Task Suggestions
+
+---
+
+# Learning Outcomes
+
+This project provided practical experience with:
+
+- Building scalable REST APIs using Express.js
+- Database modeling with Prisma ORM
+- PostgreSQL integration using Neon
+- React component architecture
+- State management using custom hooks
+- Axios-based API communication
+- CRUD application development
+- Production deployment on Vercel and Render
+- CORS configuration
+- Environment variable management
+- Error handling and validation
+- Responsive UI development
+
+---
+
+# Repository
+
+GitHub Repository
+
+https://github.com/ankush-jamuar/Ziptrip
+
+---
+
+# Live Demo
+
+Frontend
+
+https://ziptrip-phi.vercel.app
+
+Backend API
+
+https://taskflow-api-ivd2.onrender.com
+
+---
+
+# Author
 
 **Ankush Jamuar**
 
 B.Tech Information Technology
 
-GitHub: https://github.com/ankush-jamuar
+Lovely Professional University
 
-Developer Assignment Submission for Ziptrrip
+GitHub  
+https://github.com/ankush-jamuar
 
+Email  
+ankush.jamuar@gmail.com
+
+---
+
+# Acknowledgements
+
+This project was developed as part of the **Ziptrrip Developer Assignment**.
+
+The goal of the assignment was to demonstrate:
+
+- Full-stack development skills
+- Clean project architecture
+- REST API development
+- Database integration
+- Responsive frontend development
+- Code organization
+- Documentation
+- Deployment of a production-ready application
+
+---
+
+Thank you for taking the time to review this project.
